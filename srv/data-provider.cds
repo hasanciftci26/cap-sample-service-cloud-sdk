@@ -6,12 +6,7 @@ using {
 } from '../db/data-models';
 
 service CompanySales {
-    type ProductPlant {
-        productID : Products:ID;
-        newPlant  : Plants:ID;
-    };
-
-    type SalesReport {
+    function generateSalesReport() returns many {
         salesID       : SalesHeaders:ID;
         itemNo        : SalesItems:itemNo;
         productID     : Products:ID;
@@ -23,10 +18,9 @@ service CompanySales {
         currency      : Products:currency;
         quantity      : SalesItems:quantity;
     };
-
-    function generateSalesReport()                      returns many SalesReport;
-    action   updateProductPlant(product : ProductPlant) returns Boolean;
     
+    action   updateProductPlant(productID : Products:ID, newPlant : Plants:ID) returns Boolean;
+
     entity Products     as select from DBProducts;
     entity Plants       as select from DBPlants;
     entity SalesHeaders as select from DBSalesHeaders;

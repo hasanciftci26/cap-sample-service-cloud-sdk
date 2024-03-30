@@ -40,7 +40,7 @@ class CompanySales extends cds.ApplicationService {
         this.on("updateProductPlant", async (req, next) => {
             const db = await cds.connect.to("db");
             const { Products } = db.entities;
-            await db.run(UPDATE(Products, { ID: req.data.product.productID }).with({ plant: req.data.product.newPlant }));
+            await db.run(UPDATE(Products, { ID: req.data.productID }).with({ plant: req.data.newPlant }));
             return true;
         });
 

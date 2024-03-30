@@ -93,8 +93,6 @@ POST http://localhost:4004/odata/v4/company-sales/updateProductPlant
 Content-Type: application/json
 
 {
-    "product": {
-        "productID": "24fd103b-3501-401b-b7b8-169d1aef6466",
-        "newPlant": "1000"
-    }
+    "productID": "24fd103b-3501-401b-b7b8-169d1aef6466",
+    "newPlant": "1001"
 }
