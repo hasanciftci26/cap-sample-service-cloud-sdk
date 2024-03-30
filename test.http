@@ -1,0 +1,100 @@
+###
+POST http://localhost:4004/odata/v4/company-sales/Plants
+Content-Type: application/json
+
+{
+    "ID": "1000",
+    "name": "Berlin Factory",
+    "location": "Berlin"
+}
+
+###
+POST http://localhost:4004/odata/v4/company-sales/Plants
+Content-Type: application/json
+
+{
+    "ID": "1001",
+    "name": "Heidelberg Factory",
+    "location": "Heidelberg"
+}
+
+###
+POST http://localhost:4004/odata/v4/company-sales/Plants
+Content-Type: application/json
+
+{
+    "ID": "1002",
+    "name": "Istanbul Factory",
+    "location": "Istanbul"
+}
+
+###
+POST http://localhost:4004/odata/v4/company-sales/Products
+Content-Type: application/json
+
+{
+    "ID": "24fd103b-3501-401b-b7b8-169d1aef6466",
+    "name": "iPhone 15",
+    "plant": "1000",
+    "price": "1100",
+    "currency": "EUR"
+}
+
+###
+POST http://localhost:4004/odata/v4/company-sales/Products
+Content-Type: application/json
+
+{
+    "ID": "9ccf818c-4f94-4c6b-a1a8-a9983c4931cc",
+    "name": "iPhone 15 Pro",
+    "plant": "1001",
+    "price": "1350",
+    "currency": "EUR"
+}
+
+###
+POST http://localhost:4004/odata/v4/company-sales/Products
+Content-Type: application/json
+
+{
+    "ID": "c23d4a3b-0668-44ac-b5d6-6af700e38ee5",
+    "name": "iPhone 15 Pro Max",
+    "plant": "1002",
+    "price": "1600",
+    "currency": "EUR"
+}
+
+###
+POST http://localhost:4004/odata/v4/company-sales/SalesHeaders
+Content-Type: application/json
+
+{
+    "currency": "EUR",
+    "toSalesItems": [{
+        "itemNo": 1,
+        "productID": "24fd103b-3501-401b-b7b8-169d1aef6466",
+        "quantity": 3,
+        "unitPrice": "1100",
+        "currency": "EUR"        
+    },{
+        "itemNo": 2,
+        "productID": "c23d4a3b-0668-44ac-b5d6-6af700e38ee5",
+        "quantity": 8,
+        "unitPrice": "1600",
+        "currency": "EUR"        
+    }]
+}
+
+###
+GET http://localhost:4004/odata/v4/company-sales/generateSalesReport()
+
+###
+POST http://localhost:4004/odata/v4/company-sales/updateProductPlant
+Content-Type: application/json
+
+{
+    "product": {
+        "productID": "24fd103b-3501-401b-b7b8-169d1aef6466",
+        "newPlant": "1000"
+    }
+}

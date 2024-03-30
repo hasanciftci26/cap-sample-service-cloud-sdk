@@ -1,0 +1,61 @@
+_schema-version: '3.1'
+ID: company-sales
+version: 1.0.0
+description: "SAP Cloud SDK Sample Company Sales OData v4 Service"
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+# ------------------- Backend Nodejs Module -----------------------------------
+  - name: company-sales-srv
+# -----------------------------------------------------------------------------  
+    type: nodejs
+    path: gen/srv
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: company-sales-auth
+      - name: company-sales-db
+
+# ---------------------- DB Deployer Module -----------------------------------
+  - name: company-sales-db-deployer
+# -----------------------------------------------------------------------------    
+    type: hdb
+    path: gen/db
+    parameters:
+      memory: 128M
+      disk-quota: 128M    
+      buildpack: nodejs_buildpack
+    requires:
+      - name: company-sales-db
+
+resources:
+# --------------------- Authentication Service --------------------------------  
+  - name: company-sales-auth
+# -----------------------------------------------------------------------------  
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+# --------------------- HDI Container -----------------------------------------            
+  - name: company-sales-db
+# -----------------------------------------------------------------------------  
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared

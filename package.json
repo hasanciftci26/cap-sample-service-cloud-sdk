@@ -1,0 +1,48 @@
+{
+  "name": "company-sales",
+  "version": "1.0.0",
+  "description": "SAP Cloud SDK Sample Company Sales OData v4 Service",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^7",
+    "express": "^4",
+    "@sap/xssec": "^3",
+    "@sap/cds-hana": "^2"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "deploy-hana": "cds deploy --to hana:company-sales-db-hcif --for hybrid --profile hybrid --auto-undeploy"
+  },
+  "cds": {
+    "requires": {
+      "auth": {
+        "[development]": {
+          "kind": "dummy"
+        },
+        "[hybrid]": {
+          "kind": "dummy"
+        },
+        "[production]": {
+          "kind": "xsuaa"
+        }
+      },
+      "db": {
+        "[development]": {
+          "kind": "sqlite"
+        },
+        "[hybrid]": {
+          "kind": "hana"
+        },
+        "[production]": {
+          "kind": "hana"
+        }
+      }
+    }
+  }
+}
