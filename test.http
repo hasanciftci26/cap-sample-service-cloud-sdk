@@ -73,15 +73,11 @@ Content-Type: application/json
     "toSalesItems": [{
         "itemNo": 1,
         "productID": "24fd103b-3501-401b-b7b8-169d1aef6466",
-        "quantity": 3,
-        "unitPrice": "1100",
-        "currency": "EUR"        
+        "quantity": 3     
     },{
         "itemNo": 2,
         "productID": "c23d4a3b-0668-44ac-b5d6-6af700e38ee5",
-        "quantity": 8,
-        "unitPrice": "1600",
-        "currency": "EUR"        
+        "quantity": 8      
     }]
 }
 

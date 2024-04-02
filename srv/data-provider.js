@@ -2,7 +2,29 @@ const cds = require("@sap/cds");
 
 class CompanySales extends cds.ApplicationService {
     init() {
-        this.before("CREATE", "SalesHeaders", (req) => {
+        this.before("CREATE", "SalesHeaders", async (req) => {
+            const db = await cds.connect.to("db");
+            const { Products } = db.entities("CompanySales");
+            let isNonExistingProduct = false;
+            let nonExistingProductID = "";
+
+            for (let item of req.data.toSalesItems) {
+                const product = await db.run(SELECT.one.from(Products).where({ ID: item.productID }));
+
+                if (!product) {
+                    isNonExistingProduct = true;
+                    nonExistingProductID = item.productID;
+                    break;
+                }
+
+                item.unitPrice = product.price;
+                item.currency = product.currency;
+            }
+
+            if (isNonExistingProduct) {
+                return req.reject(404, `Product ID: ${nonExistingProductID} was not found!`);
+            }
+
             req.data.totalPrice = req.data.toSalesItems.reduce((total, item) => total + (parseFloat(item.unitPrice) * item.quantity), 0);
         });
 
